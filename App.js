@@ -1,21 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { DefaultTheme, Provider } from 'react-native-paper';
+import { NativeRouter, Route } from "react-router-native";
+import Home from "./src/pages/Home";
 
-export default function App() {
+const theme = {
+  ...DefaultTheme,
+  dark: false,
+  mode: 'adaptive',
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    background: '#f2f2f2',
+    primary: '#12a548',
+    accent: '#aa9834',
+  },
+};
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider theme={theme}>
+        <NativeRouter>
+            <StatusBar style="auto" />
+            <Route exact path="/" component={Home} />
+        </NativeRouter>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

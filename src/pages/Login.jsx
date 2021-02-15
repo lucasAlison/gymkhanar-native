@@ -36,6 +36,22 @@ const Login = () => {
   return (
     <View>
         <View style={styles.container}>
+            <InputWithError type={"text"}
+                            label={"E-mail"}
+                            name={"email"}
+                            value={data.email}
+                            onChange={onChangeForm}
+                            visibleError={!data.email || !data.email.includes("@")}
+                            labelError={"Email invalido"}
+            />
+            <InputWithError type={"text"}
+                            label={"Código da gincana"}
+                            name={"code"}
+                            value={data.code}
+                            onChange={onChangeForm}
+                            visibleError={!data.code}
+                            labelError={"Código invalido"}
+            />
             <Button mode="contained" onPress={onPressConfirm}>Confirmar</Button>
         </View>
     </View>

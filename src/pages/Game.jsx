@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Login = () => {
+const Game = () => {
   const formDataModel = {
       email: null,
       code: null,
@@ -42,4 +42,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default Game;

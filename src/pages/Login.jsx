@@ -1,13 +1,23 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useHistory } from "react-router-native";
-import { Button } from 'react-native-paper';
+import { Button, Headline } from 'react-native-paper';
 import InputWithError from '../components/InputWithError';
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 100,
+      padding: 20
   },
+  header: {
+    fontSize: 50,
+    textAlign: 'center',
+    paddingTop: 50
+  },
+  button: {
+    width: 150,
+    //alignSelf: 'flex-end'
+    alignSelf: 'center'
+  }
 });
 
 const Login = () => {
@@ -25,16 +35,17 @@ const Login = () => {
   }
 
   const onPressConfirm = () => {
-      let returnData = {registred: false};
+      let returnData = {registred: true};
       if(returnData.registred){
-          history.push("/confirm");
+          history.push("/user/confirm");
       }else {
-          history.push("/register");
+          history.push("/user/register");
       }
   }
 
   return (
     <View>
+        <Headline style={styles.header}>GymkhanarAR</Headline>
         <View style={styles.container}>
             <InputWithError type={"text"}
                             label={"E-mail"}
@@ -43,6 +54,7 @@ const Login = () => {
                             onChange={onChangeForm}
                             visibleError={!data.email || !data.email.includes("@")}
                             labelError={"Email invalido"}
+                            style={{paddingBottom: 15}}
             />
             <InputWithError type={"text"}
                             label={"Código da gincana"}
@@ -51,8 +63,11 @@ const Login = () => {
                             onChange={onChangeForm}
                             visibleError={!data.code}
                             labelError={"Código invalido"}
+                            style={{paddingBottom: 15}}
             />
-            <Button mode="contained" onPress={onPressConfirm}>Confirmar</Button>
+            <Button mode="contained" onPress={onPressConfirm} style={styles.button}>
+                Confirmar
+            </Button>
         </View>
     </View>
   );

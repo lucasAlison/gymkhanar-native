@@ -7,19 +7,14 @@ import DialogPolicy from '../components/DialogPolicy';
 
 const styles = StyleSheet.create({
   info: {
-    paddingTop: 50,
+    paddingTop: 30,
     paddingLeft: 30,
     paddingRight: 30,
     fontSize: 18,
   },
   email: {
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingBottom: 20,
+    padding: 30,
     fontSize: 18,
-  },
-  container: {
-    paddingTop: 50,
   },
 });
 
@@ -48,7 +43,7 @@ const Login = () => {
       if(returnData.registredTeam){
           history.push("/home");
       }else {
-          history.push("/team");
+          history.push("/user/team");
       }
   }
 
@@ -59,7 +54,7 @@ const Login = () => {
           Como este é seu primeiro acesso no GymkhanarAR,
           por favor, cadastre uma senha, seu nome completo e apelido.
       </Subheading>
-      <View style={styles.container}>
+      <View>
           <Subheading style={styles.email}>
               E-mail: {data.email}
           </Subheading>
@@ -103,8 +98,10 @@ const Login = () => {
                           visibleError={!data.confirmTerm}
                           labelError={"Você deve concordar com os termos de serviço e politica de privacidade."}
           />
-          <Button mode="contained" onPress={onPressConfirm}>Confirmar</Button>
-          <Button mode="contained" onPress={() => history.push("/")}>Cancelar</Button>
+          <View style={{flexDirection:'row-reverse', flexWrap:'wrap'}}>
+              <Button mode="contained" onPress={onPressConfirm}>Confirmar</Button>
+              <Button mode="contained" onPress={() => history.push("/")}>Cancelar</Button>
+          </View>
           <Subheading>
               Para confirmar, você precisa concordar com os termos de serviço
               e a nossa politica de privacidade.

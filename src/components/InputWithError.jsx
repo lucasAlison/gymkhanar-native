@@ -2,20 +2,24 @@ import React from 'react';
 import { View } from 'react-native';
 import { TextInput, HelperText, Checkbox, Text } from 'react-native-paper';
 
-const InputWithError = ({type, label, name, value, onChange, visibleError, labelError}) => {
+const InputWithError = ({type, label, name, value, onChange, visibleError, labelError, style}) => {
   return (
-    <View>
+    <View style={style}>
         {type === "text" &&
             <TextInput label={label} value={value}
+                       mode='outlined'
                        onChangeText={text => onChange(name, text)}/>
         }
         {type === "checkbox" &&
-            <View>
+            <View style={{flexDirection:'row', flexWrap:'wrap'}}>
                 <Checkbox
                   status={value ? 'checked' : 'unchecked'}
                   onPress={() => onChange(name, !value)}
                 />
-                <Text>{label}</Text>
+                <Text style={{width: 370, fontSize: 16}}
+                      onPress={() => onChange(name, !value)}>
+                    {label}
+                </Text>
             </View>
         }
         {labelError != undefined &&

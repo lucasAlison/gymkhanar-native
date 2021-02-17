@@ -6,13 +6,8 @@ import InputWithError from '../components/InputWithError';
 
 const styles = StyleSheet.create({
   info: {
-    paddingTop: 50,
-    paddingLeft: 30,
-    paddingRight: 30,
+    padding: 30,
     fontSize: 18,
-  },
-  container: {
-    paddingTop: 100,
   },
 });
 
@@ -39,7 +34,7 @@ const Login = () => {
             Olá {data.name}. Você está acessando a gincana {data.gymkhana}.
             Por favor, informe sua senha para continuar
         </Subheading>
-        <View style={styles.container}>
+        <View>
             <InputWithError type={"text"}
                             label={"Senha"}
                             name={"password"}
@@ -48,7 +43,7 @@ const Login = () => {
                             visibleError={!data.password}
                             labelError={"Senha invalido"}
             />
-            <Button mode="contained" onPress={() => history.push("/")}>Confirmar</Button>
+            <Button mode="contained" onPress={() => history.push("/home/")}>Confirmar</Button>
         </View>
     </View>
   );

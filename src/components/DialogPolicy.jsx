@@ -9,7 +9,7 @@ const DialogPolicy = ({visible, hideDialog}) => {
         <Dialog visible={visible} onDismiss={hideDialog}>
           <Dialog.Title>Termos de Serviço e Política de Privacidade</Dialog.Title>
           <Dialog.Content>
-            <ScrollView style={{height: 500}}>
+            <ScrollView style={{height: 470}}>
                 <Paragraph>
                   Lorem ipsum dolor sit amet. Et nihil maiores et ipsum velit
                   asperiores molestias non maiores nobis rem sapiente voluptate!

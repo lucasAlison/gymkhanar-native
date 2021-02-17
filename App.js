@@ -1,19 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { DefaultTheme, Provider, Headline } from 'react-native-paper';
-import { NativeRouter, Route, Switch } from "react-router-native";
-import Login from './src/pages/Login';
+import { DefaultTheme, Provider } from 'react-native-paper';
+import { NativeRouter, Route, Switch, Redirect } from "react-router-native";
+import AppBar from "./src/components/AppBar";
 import Confirm from './src/pages/Confirm';
+import Game from './src/pages/Game';
+import Home from './src/pages/Home';
+import Login from './src/pages/Login';
 import Register from './src/pages/Register';
-
-const styles = StyleSheet.create({
-  heading: {
-    paddingTop: 100,
-    fontSize: 50,
-    textAlign: 'center',
-  },
-});
+import Team from './src/pages/Team';
 
 const theme = {
   ...DefaultTheme,
@@ -34,17 +29,21 @@ const App = () => {
         <NativeRouter>
             <StatusBar style="auto" />
             <Switch>
-                <Route path="/">
-                    <Headline style={styles.heading}>GymkhanarAR</Headline>
+                <Redirect from="/" to="/user/" exact/>
+                <Route path="/user">
+                    <AppBar enableBack />
                     <Switch>
-                      <Route exact path="/" component={Login} />
-                      <Route exact path="/confirm" component={Confirm} />
-                      <Route exact path="/register" component={Register} />
-                      <Route exact path="/team" component={Login} />
+                        <Route exact path="/user/" component={Login} />
+                        <Route exact path="/user/confirm" component={Confirm} />
+                        <Route exact path="/user/register" component={Register} />
+                        <Route exact path="/user/team" component={Team} />
                     </Switch>
                 </Route>
-                <Route exact path="/home" component={Login} />
-                <Route exact path="/game" component={Login} />
+                <Route path="/home">
+                    <AppBar enableBell enableMenu />
+                    <Route exact path="/home/" component={Home} />
+                </Route>
+                <Route exact path="/game" component={Game} />
             </Switch>
         </NativeRouter>
     </Provider>

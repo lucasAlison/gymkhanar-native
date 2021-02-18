@@ -5,10 +5,17 @@ import { Button, Subheading } from 'react-native-paper';
 import InputWithError from '../components/InputWithError';
 
 const styles = StyleSheet.create({
-  info: {
-    padding: 30,
-    fontSize: 18,
+  container: {
+    padding: 20,
   },
+  input: {
+    paddingBottom: 20,
+  },
+  button: {
+    width: 150,
+    //alignSelf: 'flex-end'
+    alignSelf: 'center'
+  }
 });
 
 const Login = () => {
@@ -29,22 +36,24 @@ const Login = () => {
   }
 
   return (
-    <View>
-        <Subheading style={styles.info}>
+    <View style={styles.container}>
+        <Subheading style={styles.input}>
             Olá {data.name}. Você está acessando a gincana {data.gymkhana}.
             Por favor, informe sua senha para continuar
         </Subheading>
-        <View>
-            <InputWithError type={"text"}
-                            label={"Senha"}
-                            name={"password"}
-                            value={data.password}
-                            onChange={onChangeForm}
-                            visibleError={!data.password}
-                            labelError={"Senha invalido"}
-            />
-            <Button mode="contained" onPress={() => history.push("/home/")}>Confirmar</Button>
-        </View>
+        <InputWithError type={"text"}
+                        label={"Senha"}
+                        name={"password"}
+                        value={data.password}
+                        onChange={onChangeForm}
+                        visibleError={!data.password}
+                        labelError={"Senha invalido"}
+                        style={styles.input}
+        />
+        <Button mode="contained"  style={styles.button}
+                onPress={() => history.push("/home/")}>
+            Confirmar
+        </Button>
     </View>
   );
 }

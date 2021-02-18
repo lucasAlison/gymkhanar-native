@@ -1,19 +1,48 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { useHistory } from "react-router-native";
-import { Button } from 'react-native-paper';
-import InputWithError from '../components/InputWithError';
+import { Button, Subheading, Surface, Text } from 'react-native-paper';
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 100,
+    padding: 20,
   },
+  input: {
+    paddingBottom: 20,
+  },
+  paper: {
+    marginTop: 20,
+    elevation: 4,
+    padding: 20,
+    margin: 2
+  },
+  textButtons: {
+    flexDirection:'row',
+    flexWrap:'wrap',
+    justifyContent: "space-between",
+    paddingBottom: 20,
+  },
+  textCenter: {
+    marginRight: 10,
+    alignSelf: 'center'
+  }
 });
 
-const Login = () => {
+const Home = () => {
   const formDataModel = {
-      email: null,
-      code: null,
+      gymkhanaName: "<nome da gincana>",
+      teamName: '<nome do time>',
+      points: 9999,
+      participants: [
+          {
+            id: 0,
+            name: '<nome do participante>'
+          },
+          {
+            id: 1,
+            name: '<nome do participante>'
+          },
+      ],
   };
 
   let history = useHistory();
@@ -24,22 +53,35 @@ const Login = () => {
       setData({...data, [field] : value});
   }
 
-  const onPressConfirm = () => {
-      let returnData = {registred: false};
-      if(returnData.registred){
-          history.push("/user/confirm");
-      }else {
-          history.push("/user/register");
-      }
+  const onPressParticipant = (index) => {
+
   }
 
   return (
-    <View>
-        <View style={styles.container}>
-            <Button mode="contained" onPress={onPressConfirm}>Confirmar</Button>
-        </View>
-    </View>
+    <ScrollView style={styles.container}>
+        <Subheading>
+            Gincana: {data.gymkhanaName}.
+        </Subheading>
+        <Surface style={styles.paper}>
+            <View style={styles.textButtons}>
+                <Text style={styles.textCenter}>Time: {data.teamName}.</Text>
+                <Text style={styles.textCenter}>{data.points} pontos.</Text>
+            </View>
+            {data.participants.map((participant, index) =>
+                <View style={styles.textButtons} key={"participant-"+index}>
+                    <Text style={styles.textCenter}>{participant.name}</Text>
+                    <Button mode="contained" onPress={() => onPressParticipant(index)}>
+                        Excluir
+                    </Button>
+                </View>
+            )}
+        </Surface>
+        <Surface style={styles.paper}>
+            <Text style={styles.input}>Eventos</Text>
+        </Surface>
+        <Text style={styles.input}></Text>
+    </ScrollView>
   );
 }
 
-export default Login;
+export default Home;

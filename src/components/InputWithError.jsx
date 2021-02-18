@@ -16,7 +16,7 @@ const InputWithError = ({type, label, name, value, onChange, visibleError, label
                   status={value ? 'checked' : 'unchecked'}
                   onPress={() => onChange(name, !value)}
                 />
-                <Text style={{width: 370, fontSize: 16}}
+                <Text style={{width: 280, fontSize: 14}}
                       onPress={() => onChange(name, !value)}>
                     {label}
                 </Text>

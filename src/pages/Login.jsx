@@ -9,9 +9,10 @@ const styles = StyleSheet.create({
       padding: 20
   },
   header: {
-    fontSize: 50,
+    fontSize: 45,
     textAlign: 'center',
-    paddingTop: 50
+    paddingTop: 20,
+    paddingBottom: 20
   },
   button: {
     width: 150,
@@ -35,7 +36,7 @@ const Login = () => {
   }
 
   const onPressConfirm = () => {
-      let returnData = {registred: true};
+      let returnData = {registred: false};
       if(returnData.registred){
           history.push("/user/confirm");
       }else {
@@ -44,31 +45,29 @@ const Login = () => {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
         <Headline style={styles.header}>GymkhanarAR</Headline>
-        <View style={styles.container}>
-            <InputWithError type={"text"}
-                            label={"E-mail"}
-                            name={"email"}
-                            value={data.email}
-                            onChange={onChangeForm}
-                            visibleError={!data.email || !data.email.includes("@")}
-                            labelError={"Email invalido"}
-                            style={{paddingBottom: 15}}
-            />
-            <InputWithError type={"text"}
-                            label={"Código da gincana"}
-                            name={"code"}
-                            value={data.code}
-                            onChange={onChangeForm}
-                            visibleError={!data.code}
-                            labelError={"Código invalido"}
-                            style={{paddingBottom: 15}}
-            />
-            <Button mode="contained" onPress={onPressConfirm} style={styles.button}>
-                Confirmar
-            </Button>
-        </View>
+        <InputWithError type={"text"}
+                        label={"E-mail"}
+                        name={"email"}
+                        value={data.email}
+                        onChange={onChangeForm}
+                        visibleError={!data.email || !data.email.includes("@")}
+                        labelError={"Email invalido"}
+                        style={{paddingBottom: 15}}
+        />
+        <InputWithError type={"text"}
+                        label={"Código da gincana"}
+                        name={"code"}
+                        value={data.code}
+                        onChange={onChangeForm}
+                        visibleError={!data.code}
+                        labelError={"Código invalido"}
+                        style={{paddingBottom: 15}}
+        />
+        <Button mode="contained" onPress={onPressConfirm} style={styles.button}>
+            Confirmar
+        </Button>
     </View>
   );
 }

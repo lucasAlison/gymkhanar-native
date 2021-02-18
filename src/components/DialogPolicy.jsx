@@ -2,14 +2,16 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Button, Paragraph, Dialog, Portal } from 'react-native-paper';
 
+const height = 440;
+
 const DialogPolicy = ({visible, hideDialog}) => {
   return (
     <View>
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
           <Dialog.Title>Termos de Serviço e Política de Privacidade</Dialog.Title>
-          <Dialog.Content>
-            <ScrollView style={{height: 470}}>
+          <Dialog.Content style={{paddingBottom: 5}}>
+            <ScrollView style={{height: height}}>
                 <Paragraph>
                   Lorem ipsum dolor sit amet. Et nihil maiores et ipsum velit
                   asperiores molestias non maiores nobis rem sapiente voluptate!

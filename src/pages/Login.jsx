@@ -46,7 +46,7 @@ const Login = () => {
 
   return (
     <View style={styles.container}>
-        <Headline style={styles.header}>GymkhanarAR</Headline>
+        <Headline style={styles.header}>GymkhanAR</Headline>
         <InputWithError type={"text"}
                         label={"E-mail"}
                         name={"email"}

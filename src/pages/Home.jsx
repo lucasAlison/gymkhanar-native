@@ -75,6 +75,14 @@ const Home = () => {
                     </Button>
                 </View>
             )}
+            <View style={styles.textButtons}>
+                <Button mode="contained" onPress={() => {}}>
+                    Convidar
+                </Button>
+                <Button mode="contained" onPress={() => {}}>
+                    Sair do time
+                </Button>
+            </View>
         </Surface>
         <Surface style={styles.paper}>
             <Text style={styles.input}>Eventos</Text>

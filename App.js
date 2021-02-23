@@ -31,17 +31,19 @@ const App = () => {
             <Switch>
                 <Redirect from="/" to="/user/" exact/>
                 <Route path="/user">
-                    <AppBar enableBack />
-                    <Switch>
-                        <Route exact path="/user/" component={Login} />
-                        <Route exact path="/user/confirm" component={Confirm} />
-                        <Route exact path="/user/register" component={Register} />
-                        <Route exact path="/user/team" component={Team} />
-                    </Switch>
+                    <AppBar enableBack>
+                        <Switch>
+                            <Route exact path="/user/" component={Login} />
+                            <Route exact path="/user/confirm" component={Confirm} />
+                            <Route exact path="/user/register" component={Register} />
+                            <Route exact path="/user/team" component={Team} />
+                        </Switch>
+                    </AppBar>
                 </Route>
                 <Route path="/home">
-                    <AppBar enableBell enableMenu />
-                    <Route exact path="/home/" component={Home} />
+                    <AppBar enableBell enableMenu>
+                        <Route exact path="/home/" component={Home} />
+                    </AppBar>
                 </Route>
                 <Route exact path="/game" component={Game} />
             </Switch>

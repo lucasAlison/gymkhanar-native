@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { useHistory } from "react-router-native";
 import { Button, Subheading, Surface, Text } from 'react-native-paper';
 
 const styles = StyleSheet.create({
@@ -28,7 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const Home = () => {
+const Home = ({navigation}) => {
   const formDataModel = {
       gymkhanaName: "<nome da gincana>",
       teamName: '<nome do time>',
@@ -44,8 +43,6 @@ const Home = () => {
           },
       ],
   };
-
-  let history = useHistory();
 
   const [data, setData] = React.useState(formDataModel);
 

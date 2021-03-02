@@ -1,8 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { DefaultTheme, Provider } from 'react-native-paper';
-import { NativeRouter, Route, Switch, Redirect } from "react-router-native";
-import AppBar from "./src/components/AppBar";
+/* Navegation */
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+/* created */
+import AppBar from './src/components/AppBar'
 import Confirm from './src/pages/Confirm';
 import Game from './src/pages/Game';
 import Home from './src/pages/Home';
@@ -23,31 +27,34 @@ const theme = {
   },
 };
 
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+const HomeGame = () => {
+    return (
+      <Drawer.Navigator>
+          <Drawer.Screen name="Home" component={Home}/>
+          <Drawer.Screen name="Game" component={Game}/>
+      </Drawer.Navigator>
+    );
+}
+
 const App = () => {
   return (
     <Provider theme={theme}>
-        <NativeRouter>
+        <NavigationContainer>
             <StatusBar style="auto" />
-            <Switch>
-                <Redirect from="/" to="/user/" exact/>
-                <Route path="/user">
-                    <AppBar enableBack>
-                        <Switch>
-                            <Route exact path="/user/" component={Login} />
-                            <Route exact path="/user/confirm" component={Confirm} />
-                            <Route exact path="/user/register" component={Register} />
-                            <Route exact path="/user/team" component={Team} />
-                        </Switch>
-                    </AppBar>
-                </Route>
-                <Route path="/home">
-                    <AppBar enableBell enableMenu>
-                        <Route exact path="/home/" component={Home} />
-                    </AppBar>
-                </Route>
-                <Route exact path="/game" component={Game} />
-            </Switch>
-        </NativeRouter>
+            <Stack.Navigator
+                initialRouteName="Login"
+                screenOptions={{header: (props) => <AppBar {...props}/>}}
+            >
+                <Stack.Screen name="Login" component={Login}/>
+                <Stack.Screen name="Confirm" component={Confirm}/>
+                <Stack.Screen name="Register" component={Register}/>
+                <Stack.Screen name="Team" component={Team}/>
+                <Stack.Screen name="Home" component={HomeGame}/>
+            </Stack.Navigator>
+        </NavigationContainer>
     </Provider>
   );
 }

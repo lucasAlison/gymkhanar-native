@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { useHistory } from "react-router-native";
 import { Button, Subheading } from 'react-native-paper';
 import InputWithError from '../components/InputWithError';
 import DialogPolicy from '../components/DialogPolicy';
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const Login = () => {
+const Register = ({navigation}) => {
   const formDataModel = {
       password: null,
       confirmPassword: null,
@@ -24,8 +23,6 @@ const Login = () => {
       code: "sdga",
       gymkhana: "<nome da gincana>"
   };
-
-  const history = useHistory();
 
   const [openDialog, setOpenDialog] = React.useState(false);
   const [data, setData] = React.useState(formDataModel);
@@ -37,9 +34,9 @@ const Login = () => {
   const onPressConfirm = () => {
       let returnData = {registredTeam: false};
       if(returnData.registredTeam){
-          history.push("/home");
+          navigation.navigate("Home", {screen: "Home"});
       }else {
-          history.push("/user/team");
+          navigation.navigate("Team");
       }
   }
 
@@ -95,7 +92,7 @@ const Login = () => {
       />
       <View style={{flexDirection:'row-reverse', flexWrap:'wrap', ...styles.input}}>
           <Button mode="contained" onPress={onPressConfirm} style={{marginLeft: 10}}>Confirmar</Button>
-          <Button mode="contained" onPress={() => history.goBack()}>Cancelar</Button>
+          <Button mode="contained" onPress={() => navigation.goBack()}>Cancelar</Button>
       </View>
       <Subheading style={styles.input}>
           Para confirmar, você precisa concordar com os termos de serviço
@@ -112,4 +109,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default Register;

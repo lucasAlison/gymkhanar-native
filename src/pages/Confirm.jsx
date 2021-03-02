@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useHistory } from "react-router-native";
 import { Button, Subheading } from 'react-native-paper';
 import InputWithError from '../components/InputWithError';
 
@@ -18,7 +17,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const Login = () => {
+const Confirm = ({navigation}) => {
   const formDataModel = {
       password: null,
       name: "<apelido>",
@@ -26,8 +25,6 @@ const Login = () => {
       code: "sdga",
       gymkhana: "<nome da gincana>"
   };
-
-  const history = useHistory();
 
   const [data, setData] = React.useState(formDataModel);
 
@@ -51,11 +48,11 @@ const Login = () => {
                         style={styles.input}
         />
         <Button mode="contained"  style={styles.button}
-                onPress={() => history.push("/home/")}>
+                onPress={() => navigation.navigate("Home", {screen: 'Home'})}>
             Confirmar
         </Button>
     </View>
   );
 }
 
-export default Login;
+export default Confirm;

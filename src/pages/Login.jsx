@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useHistory } from "react-router-native";
 import { Button, Headline } from 'react-native-paper';
 import InputWithError from '../components/InputWithError';
 
@@ -21,13 +20,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const formDataModel = {
       email: null,
       code: null,
   };
-
-  let history = useHistory();
 
   const [data, setData] = React.useState(formDataModel);
 
@@ -38,9 +35,9 @@ const Login = () => {
   const onPressConfirm = () => {
       let returnData = {registred: false};
       if(returnData.registred){
-          history.push("/user/confirm");
+          navigation.navigate("Confirm");
       }else {
-          history.push("/user/register");
+          navigation.navigate("Register");
       }
   }
 

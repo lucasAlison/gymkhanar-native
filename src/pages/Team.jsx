@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { useHistory } from "react-router-native";
 import { Button, Subheading, Surface, Text } from 'react-native-paper';
 import InputWithError from '../components/InputWithError';
 
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const Team = () => {
+const Team = ({navigation}) => {
   const formDataModel = {
       gymkhanaName: "<nome da gincana>",
       teamName: null,
@@ -60,8 +59,6 @@ const Team = () => {
       ]
   };
 
-  let history = useHistory();
-
   const [data, setData] = React.useState(formDataModel);
 
   const onChangeForm = (field, value) => {
@@ -69,15 +66,15 @@ const Team = () => {
   }
 
   const onPressConfirm = () => {
-      history.push("/home");
+      navigation.navigate("Home", {screen: "Home"});
   }
 
   const onPressInvitation = (index) => {
-      history.push("/home");
+      navigation.navigate("Home", {screen: "Home"});
   }
 
   const onPressTeam = (index) => {
-      history.push("/home");
+      navigation.navigate("Home", {screen: "Home"});
   }
 
   return (

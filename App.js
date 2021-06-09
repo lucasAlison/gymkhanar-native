@@ -34,7 +34,8 @@ const HomeGame = () => {
     return (
       <Drawer.Navigator>
           <Drawer.Screen name="Home" component={Home}/>
-          <Drawer.Screen name="Game" component={Game}/>
+          <Drawer.Screen name="Object" component={Game} initialParams={{type : "object"}} />
+          <Drawer.Screen name="Image" component={Game} initialParams={{type : "image"}} />
       </Drawer.Navigator>
     );
 }

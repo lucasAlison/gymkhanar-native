@@ -2,13 +2,14 @@ import React from 'react';
 import { View } from 'react-native';
 import { TextInput, HelperText, Checkbox, Text } from 'react-native-paper';
 
-const InputWithError = ({type, label, name, value, onChange, visibleError, labelError, style}) => {
+const InputWithError = ({type, label, name, value, onChange, visibleError, labelError, style, ...rest}) => {
   return (
     <View style={style}>
         {type === "text" &&
             <TextInput label={label} value={value}
                        mode='outlined'
-                       onChangeText={text => onChange(name, text)}/>
+                       onChangeText={text => onChange(name, text)}
+                       {...rest}/>
         }
         {type === "checkbox" &&
             <View style={{flexDirection:'row', flexWrap:'wrap'}}>

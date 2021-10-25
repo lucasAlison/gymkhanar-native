@@ -9,7 +9,7 @@ const AppBar = ({navigation, previous}) => {
     return (
         <Appbar.Header>
             {previous && <Appbar.BackAction onPress={navigation.goBack} />}
-            {enableMenu && <Appbar.Action icon="menu" onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />}
+            {/* {enableMenu && <Appbar.Action icon="menu" onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} />} */}
             <Appbar.Content title="GymkhanAR" />
             {enableMenu && <Appbar.Action icon="bell" onPress={() => {}} />}
         </Appbar.Header>

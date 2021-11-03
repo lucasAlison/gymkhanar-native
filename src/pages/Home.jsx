@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Button, Subheading, Surface, Text } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
 import api from '../services/api';
+import * as Linking from 'expo-linking';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,6 +27,25 @@ const styles = StyleSheet.create({
   textCenter: {
     marginRight: 10,
     alignSelf: 'center'
+  },
+  textCenterActivity: {
+    alignSelf: 'center',    
+    width: 115,    
+  },
+  textCenterName: {
+    alignSelf: 'center',
+    width: 100,
+    textAlign: "center",
+  },
+  textCenterStatus: {
+    alignSelf: 'center',
+    width: 100,
+    textAlign: "right"
+  },
+  textCenterHeader: {
+    marginRight: 10,
+    alignSelf: 'center',
+    fontWeight: "bold"
   },
   viewHeader: {
     borderTopWidth: 1,
@@ -54,17 +74,35 @@ const Home = ({navigation}) => {
     participant
   };  
   const [data, setData] = React.useState(formDataModel);
-  // const listGymkhanaAtivities = async () => {
-  //   try {
-  //     const gymkhanaActivities = await api.get(`activities/gymkhana/${data.gymkhana.id}`);
-  //     data.gymkhana.activities = gymkhanaActivities.data;
-  //     setData(data);   
-  //   } catch (err) {
-  //     alert(err.message);
-  //   }
-  // }
-  // listGymkhanaAtivities();
 
+  
+  const listAtivities = async () => {
+    try {
+      const tas = await api.get(`/team/activities/team/${data.team.id}`);
+      data.team.activities = tas.data;
+      data.team.points = team.activities.reduce((total, item) => {        
+        return total + item.points;
+      }, 0);
+      const gymkhanaActivities = await api.get(`activities/gymkhana/${data.gymkhana.id}`);
+      data.gymkhana.activities = gymkhanaActivities.data.filter((activity) => {
+        if (!data.team.activities){
+          return true;
+        }
+        return !data.team.activities.some(a => a.activity_id === activity.id);
+      });       
+      setData({...data});   
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+
+  useEffect(() => {
+    const handle = setInterval(listAtivities, 10000);
+    return () => {
+      clearInterval(handle);
+    };      
+  }, []);
+  
   const onChangeForm = (field, value) => {
       setData({...data, [field] : value});
   }
@@ -73,9 +111,8 @@ const Home = ({navigation}) => {
     try {
       await api.delete(`users/${participant.id}/team`);      
       const usersTeam = await api.get(`users/team/${data.team.id}`);
-      data.team.participants = usersTeam.data;
-      setData(data);            
-      navigation.navigate("Home", data);
+      data.team.participants = usersTeam.data;      
+      setData({...data});            
     } catch (err) {
       alert(err.message);
     }
@@ -91,6 +128,19 @@ const Home = ({navigation}) => {
     } catch (err) {
       alert(err.message);
     }
+  }
+
+  const onPressStart = async (activity_id) => {
+    const teamActivity = await api.post('team/activities', {
+      status: "STARTED",
+      team_id: data.team.id,
+      activity_id,
+      participant_id: data.participant.id,
+    }).then((d) => {
+      listAtivities();
+      let url = 'unitydl://gymkhanar2?token='+d.data.id;      
+      Linking.openURL(url);
+    });
   }
 
   const statusRender = (item) => {
@@ -129,7 +179,11 @@ const Home = ({navigation}) => {
                 </View>
             )}
             <View style={styles.textButtons}>
-                <Button mode="contained" onPress={() => onPressLeaveTeam()}>
+                <Button mode="contained" disabled={data.team.activities.some(
+                  a => 
+                  a.participant.id === data.participant.id &&
+                  a.status !== "FINISHED")
+                } onPress={() => onPressLeaveTeam()}>
                     Sair do time
                 </Button>
             </View>
@@ -139,15 +193,15 @@ const Home = ({navigation}) => {
             <Text style={styles.textHeader}>Atividades do time</Text>                
           </View>
           <View style={styles.textButtons}>
-            <Text style={styles.textCenter}>Descrição</Text>
-            <Text style={styles.textCenter}>Pontos</Text>
-            <Text style={styles.textCenter}>Status</Text>
+            <Text style={styles.textCenterHeader}>Descrição (Pts)</Text>
+            <Text style={styles.textCenterHeader}>Participante</Text>
+            <Text style={styles.textCenterHeader}>Status</Text>
           </View>
           {data.team.activities.map((activity, index) =>
             <View style={styles.textButtons} key={"activity-"+index}>
-              <Text style={styles.textCenter}>{activity.activity.name}</Text>
-              <Text style={styles.textCenter}>{activity.points}</Text>
-              <Text style={styles.textCenter}>{statusRender(activity.status)}</Text>
+              <Text style={styles.textCenterActivity}>{activity.activity.name+" ("+(activity.activity.points|0)+")"}</Text>
+              <Text style={styles.textCenterName}>{activity.participant.name}</Text>
+              <Text style={styles.textCenterStatus}>{statusRender(activity.status)}</Text>
             </View>
           )}
         </Surface>
@@ -158,7 +212,7 @@ const Home = ({navigation}) => {
           {data.gymkhana.activities.map((activity, index) =>
             <View style={styles.textButtons} key={"activity-"+index}>
               <Text style={styles.textCenter}>{activity.name}</Text>
-                <Button mode="contained">
+                <Button mode="contained" onPress={() => onPressStart(activity.id)}>
                   Iniciar
                 </Button>
             </View>

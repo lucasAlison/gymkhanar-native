@@ -53,7 +53,12 @@ const Confirm = ({navigation}) => {
         team.activities = [];
 
         const gymkhanaActivities = await api.get(`activities/gymkhana/${data.gymkhana.id}`);
-        gymkhana.activities = gymkhanaActivities.data;
+        gymkhana.activities = gymkhanaActivities.data.filter((activity) => {
+          if (!team.activities){
+            return true;
+          }
+          return !team.activities.some(a => a.activity_id === activity.id);
+        });       
 
         const teamActivities = await api.get(`/team/activities/team/${team.id}`);
         team.activities = teamActivities.data;

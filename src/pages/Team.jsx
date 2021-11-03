@@ -105,13 +105,19 @@ const Team = ({navigation}) => {
       team.activities = [];
       
       const gymkhanaActivities = await api.get(`activities/gymkhana/${data.gymkhana.id}`);
-      gymkhana.activities = gymkhanaActivities.data;
       
       const teamActivities = await api.get(`/team/activities/team/${team.id}`);
       team.activities = teamActivities.data;
       team.points = team.activities.reduce((total, item) => {
         return total + item.points;
       }, 0);
+
+      gymkhana.activities = gymkhanaActivities.data.filter((activity) => {
+        if (!team.activities){
+          return true;
+        }
+        return !team.activities.some(a => a.activity_id === activity.id);
+      });
       
       navigation.navigate("Home", {
         gymkhana,

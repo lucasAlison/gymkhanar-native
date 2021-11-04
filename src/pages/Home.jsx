@@ -143,6 +143,11 @@ const Home = ({navigation}) => {
     });
   }
 
+  const onPressResume = async (activity_id) => {
+    let url = 'unitydl://gymkhanar2?token='+activity_id;      
+    Linking.openURL(url);    
+  }
+
   const statusRender = (item) => {
     switch (item) {
       case 'STARTED':
@@ -201,7 +206,13 @@ const Home = ({navigation}) => {
             <View style={styles.textButtons} key={"activity-"+index}>
               <Text style={styles.textCenterActivity}>{activity.activity.name+" ("+(activity.activity.points|0)+")"}</Text>
               <Text style={styles.textCenterName}>{activity.participant.name}</Text>
-              <Text style={styles.textCenterStatus}>{statusRender(activity.status)}</Text>
+              <Text style={styles.textCenterStatus}>{
+                activity.status === 'FINISHED' ? statusRender(activity.status) :
+                activity.participant.id === data.participant.id ? 
+                  <Button mode="contained" onPress={() => onPressResume(activity.id)}>
+                    Retomar
+                  </Button> :
+                  statusRender(activity.status)}</Text>
             </View>
           )}
         </Surface>
